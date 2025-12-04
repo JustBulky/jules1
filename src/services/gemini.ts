@@ -110,6 +110,7 @@ export class GeminiService {
 
         while (functionCalls && functionCalls.length > 0) {
             // For each function call, execute it
+            const call = functionCalls[0];
             const call = functionCalls[0]; // Simplification: handle first call. Gemini usually does one at a time or parallel.
 
             // Log thought process? Gemini doesn't always expose "thought" separate from text.
