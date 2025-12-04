@@ -74,6 +74,16 @@ export class GeminiService {
     // Convert our internal Message format to Gemini's format
     // Note: Gemini stateful chat history is separate, but we can just send the context or use startChat
 
+    // Filter out initial welcome message or system messages if they would cause "user first" violations
+    // Google Gemini history must start with a User message if history is provided.
+    // If our history starts with 'assistant', we must skip it.
+    let validHistory = history.filter(h => h.role !== 'system');
+    if (validHistory.length > 0 && validHistory[0].role === 'assistant') {
+        validHistory = validHistory.slice(1);
+    }
+
+    const chat = this.model.startChat({
+        history: validHistory.map(h => ({
     const chat = this.model.startChat({
         history: history.filter(h => h.role !== 'system').map(h => ({
             role: h.role === 'assistant' ? 'model' : 'user',
