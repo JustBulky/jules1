@@ -71,6 +71,9 @@ export class GeminiService {
   }
 
   async sendMessage(history: Message[], newMessage: string, onTokenUsageUpdate?: (usage: any) => void): Promise<Message[]> {
+    // Convert our internal Message format to Gemini's format
+    // Note: Gemini stateful chat history is separate, but we can just send the context or use startChat
+
     // Filter out initial welcome message or system messages if they would cause "user first" violations
     // Google Gemini history must start with a User message if history is provided.
     // If our history starts with 'assistant', we must skip it.
@@ -81,6 +84,8 @@ export class GeminiService {
 
     const chat = this.model.startChat({
         history: validHistory.map(h => ({
+    const chat = this.model.startChat({
+        history: history.filter(h => h.role !== 'system').map(h => ({
             role: h.role === 'assistant' ? 'model' : 'user',
             parts: [{ text: h.content }],
         })),
@@ -91,6 +96,13 @@ export class GeminiService {
         let response = await result.response;
         let functionCalls = response.functionCalls();
 
+        // Handle Tool Calls Loop
+        // Gemini might return multiple function calls or just one.
+        // We need to execute them and send the result back.
+
+        // Add the initial user message if we were returning the whole chain,
+        // but here we just return the new messages generated.
+
         // Track initial usage
         if (response.usageMetadata && onTokenUsageUpdate) {
             onTokenUsageUpdate(response.usageMetadata);
@@ -99,6 +111,10 @@ export class GeminiService {
         while (functionCalls && functionCalls.length > 0) {
             // For each function call, execute it
             const call = functionCalls[0];
+            const call = functionCalls[0]; // Simplification: handle first call. Gemini usually does one at a time or parallel.
+
+            // Log thought process? Gemini doesn't always expose "thought" separate from text.
+            // If there is text alongside function call, it's usually empty for 1.0 pro/flash unless specified.
 
             let functionResponse;
             try {
