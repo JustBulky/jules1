@@ -84,6 +84,8 @@ export class GeminiService {
 
     const chat = this.model.startChat({
         history: validHistory.map(h => ({
+    const chat = this.model.startChat({
+        history: history.filter(h => h.role !== 'system').map(h => ({
             role: h.role === 'assistant' ? 'model' : 'user',
             parts: [{ text: h.content }],
         })),
