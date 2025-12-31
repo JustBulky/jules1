@@ -18,7 +18,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       <div className={clsx(
         "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
         isBot ? "bg-blue-600/20 text-blue-400" : "bg-zinc-700 text-zinc-300"
-      )}>
+      )} aria-hidden="true">
         {isBot ? <Bot size={18} /> : <User size={18} />}
       </div>
 
