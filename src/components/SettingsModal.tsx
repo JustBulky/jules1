@@ -49,7 +49,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
         <div className="p-6 border-b border-zinc-700 flex justify-between items-center">
           <h2 className="text-xl font-semibold text-white">Settings</h2>
           {canClose && (
-            <button onClick={onClose} className="text-zinc-400 hover:text-white">
+            <button
+              onClick={onClose}
+              className="text-zinc-400 hover:text-white"
+              aria-label="Close settings"
+            >
               <X size={24} />
             </button>
           )}
