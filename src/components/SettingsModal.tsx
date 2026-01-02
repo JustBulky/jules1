@@ -38,7 +38,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
     try {
       await overseerr.testConnection();
       setTestStatus('success');
-    } catch (error) {
+    } catch {
       setTestStatus('error');
     }
   };
