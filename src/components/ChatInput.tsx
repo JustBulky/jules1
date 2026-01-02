@@ -45,12 +45,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
           onKeyDown={handleKeyDown}
           disabled={disabled}
           placeholder="What would you like to request?"
+          aria-label="Chat input"
           className="w-full bg-transparent text-white placeholder-zinc-500 resize-none outline-none py-3 px-2 min-h-[50px] max-h-[200px]"
           rows={1}
         />
         <button
           type="submit"
           disabled={!input.trim() || disabled}
+          aria-label={disabled ? 'Sending message' : 'Send message'}
+          title="Send message"
           className="p-3 mb-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:bg-transparent disabled:text-zinc-500 transition-all"
         >
           {disabled ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
