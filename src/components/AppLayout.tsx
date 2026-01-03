@@ -20,8 +20,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, onOpenSettings }
           onClick={onOpenSettings}
           className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-md transition-colors"
           title="Settings"
+          aria-label="Settings"
         >
-          <SettingsIcon size={20} />
+          <SettingsIcon size={20} aria-hidden="true" />
         </button>
       </header>
 

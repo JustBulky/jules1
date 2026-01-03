@@ -51,9 +51,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
         <button
           type="submit"
           disabled={!input.trim() || disabled}
+          aria-label={disabled ? "Sending..." : "Send message"}
           className="p-3 mb-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:bg-transparent disabled:text-zinc-500 transition-all"
         >
-          {disabled ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
+          {disabled ? <Loader2 className="animate-spin" size={20} aria-hidden="true" /> : <Send size={20} aria-hidden="true" />}
         </button>
       </form>
       <div className="text-center mt-2 text-xs text-zinc-500">
